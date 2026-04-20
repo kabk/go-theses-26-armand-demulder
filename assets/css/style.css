@@ -133,6 +133,7 @@ a:hover {
   padding: 2px 8px;
   border: 1.5px solid black;
   border-radius: 50px;
+  transition: font-size 0.3s ease, padding 0.3s ease, gap 0.3s ease;
 }
 
 .lang-sep {
@@ -1337,6 +1338,23 @@ figure.mobile-inline-img {
   #lightbox-next {
     right: -20px;
   }
+
+  /* ── MOBILE : boutons réduits une fois scrollé (titre dans la nav) ── */
+  /* Quand on a scrollé, le titre s'insère dans la barre — les boutons doivent
+     être plus compacts pour ne pas entrer en collision avec lui */
+  body:not(.is-at-top) .lang-toggle {
+    font-size: 0.6rem;
+    padding: 1px 6px;
+    gap: 2px;
+  }
+
+  body:not(.is-at-top) #info-btn {
+    padding: 2px 8px;
+  }
+
+  body:not(.is-at-top) #info-btn .abstract-btn-img {
+    width: 18px;
+  }
 }
 
 @media (min-width: 780px) and (max-width: 992px) {
@@ -1380,7 +1398,7 @@ figure.mobile-inline-img {
   width: 25px;
   /* Taille de la flèche quand elle est dans le menu en haut */
   height: auto;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, width 0.3s ease;
   display: block;
 }
 
@@ -1467,6 +1485,7 @@ body.is-at-top #info-btn .abstract-btn-hover-text {
   width: 90%;
   max-height: 80vh;
   overflow-y: auto;
+  overflow-x: hidden;
   border: 2px solid #000;
   cursor: auto;
 }
@@ -1529,6 +1548,7 @@ body.is-at-top #info-btn .abstract-btn-hover-text {
 .abstract-scroll-arrows img {
   width: 600px;
   /* <-- MODIFIEZ CECI POUR CHANGER LA TAILLE DES FLÈCHES EN BAS (ex: 200px, 250px...) */
+  max-width: 100%;
   height: auto;
 }
 
