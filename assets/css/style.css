@@ -1,239 +1,1587 @@
 @charset "UTF-8";
 
-
-
-/* @FONT FACE (enable the use of 'custom fonts' inside your document) */
-
-/* 
-  You can use 'fontsquirrel' (https://www.fontsquirrel.com) 
-  or 'transfonter' (https://transfonter.org)
-  to generate your own font for the web from .ttf or .oft files 
-*/
-
 @font-face {
-    font-family: 'Your Font Name';
-    src: url('../fonts/yourfontname/yourfontname-roman.woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
+  font-family: 'Archivo';
+  src: url('../fonts/archivo/Archivo-Black.woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: block;
 }
 
 @font-face {
-    font-family: 'Your Font Name';
-    src: url('../fonts/yourfontname/yourfontname-italic.woff2');
-    font-weight: normal;
-    font-style: italic;
-    font-display: block;
+  font-family: 'literata';
+  src: url('../fonts/literata/Literata-Bold.woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
 
-
-
-/* VARIABLES */
-
+/* ── VARIABLES ── */
 :root {
-  /* Color values */
-  --color-background: rgba(255,255,255,1);
-  --color-text: rgba(0,0,0,1);
-  --color-text-link: rgba(0,0,255,0.8);
-  --color-text-link-hover: rgba(0,0,255,0.4);
-  /* Font values */
-  --font-text: 'Your Font Name', 'Helvetica', 'Arial', sans-serif;
-  --font-size: 24px;
-  /* Margin values */
-  --margin: 1rem;
-
-
-  /* Examples of possible variables */
-
-  --font-size-heading: calc(var(--font-size) * 2);
-  --font-size-subheading: calc(var(--font-size) * 1.25);
-  --font-size-caption: calc(var(--font-size) * 0.875);
-
-  --margin-xs: calc(var(--margin) * 0.5);
-  --margin-s: calc(var(--margin) * 1);
-  --margin-m: calc(var(--margin) * 2);
-  --margin-l: calc(var(--margin) * 3);
-  --margin-xl: calc(var(--margin) * 5);
-
+  --bg: #ffffff;
+  --text: #111;
+  --muted: #888;
+  --font: "Archivo", sans-serif;
+  --fs: 17px;
+  --nav-h: 62px;
+  --col-left: 10%;
+  --gap: 4vw;
+  --pad: 2.5vw;
 }
 
+/* ── BASE ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-
-/* GENERAL STYLES */
+html,
+body {
+  overflow-x: clip;
+}
 
 html {
-  font: var(--font-size) var(--font-family);
-  color: var(--color-text);
-  background-color: var(--color-background);
+  height: 100%;
+
+  font-size: var(--fs);
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+
+  -ms-overflow-style: none;
+  /* IE and Edge */
+
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+
+  /* CURSEUR PERSONNALISÉ */
+  cursor: url('../../content/arrow_icon.png'), auto;
+}
+
+/* Fallback Firefox pour cacher la scrollbar générale */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: none;
+    /* Firefox */
+  }
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Personnalisation WebKit pour toutes les colonnes */
+.col-main::-webkit-scrollbar,
+.col-photos::-webkit-scrollbar {
+  width: 25px;
+  background: transparent;
+}
+
+.col-main::-webkit-scrollbar-track,
+.col-photos::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.col-main::-webkit-scrollbar-thumb,
+.col-photos::-webkit-scrollbar-thumb {
+  background-image: url('../../content/arrow_scrolling.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+/* Cache totalement la scrollbar pour col-sub */
+.col-sub::-webkit-scrollbar {
+  display: none;
 }
 
 body {
-  position:relative;
-  background-color: var(--color-background);
-  font: var(--font-size) var(--font-family);
-  color: var(--color-text);
-  width:100%;
-  height:auto;
-  overflow-y:auto;
+  margin: 0;
+  background: var(--bg);
 }
 
+/* body > div {
+  scroll-snap-align: start;
+
+} */
+
 a {
-  color: var(--color-text-link);
+  color: var(--text);
   text-decoration: underline;
+  cursor: url('../../content/arrow_icon_small.png'), pointer;
 }
 
 a:hover {
-  color: var(--color-text-link-hover);
-  text-decoration: underline;
+  opacity: 0.45;
 }
 
-
-h1{
-  /* h1 style */
-  font-size: clamp(
-    var(--font-size-heading),
-    4vw,
-    calc(var(--font-size-heading) * 1.25)
-  );
+/* ==========================================================================
+   LANG TOGGLE (EN/FR)
+   ========================================================================== */
+.lang-toggle {
+  position: static;
+  z-index: 999;
+  font-family: var(--font);
+  font-size: 0.75rem;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  background: white;
+  padding: 2px 8px;
+  border: 1.5px solid black;
+  border-radius: 50px;
 }
 
-h2{
-  /* h2 style */
+.lang-sep {
+  user-select: none;
+  font-weight: bold;
 }
 
-h3{
-  /* h3 style */
+/* Title styling when expanded */
+body.title-is-expanded .title-space {
+  display: none;
 }
 
-h4, h5, h6{
-  /* h4-h5-h6 style */
+body.title-is-expanded .title-br {
+  display: inline;
 }
 
-p{
-  /* paragraph style */
-}
-
-ol, ul{
-  /* ordered list and unordered list styles */
-}
-
-blockquote{
-  /* blockquote element style */
-}
-
-hr{
-  /* horizontal rule style */
-}
-
-
-
-/* PAGE STYLES */
-
-/* page structure */
-
-div.page-wrapper {
-  /* the element that 'wraps' everything */
-  padding: var(--margin);
-}
-
-/* navigation */
- 
-nav{
-  
-}
-
-/* content */
-
-main{
- 
-}
-
-summary{
-  
-}
-
-
-
-
-
-
-/* UTILITY CLASSES */
-
-/* hide desktop mobile etc */
-
-.desktop-only {
-  display: block;
-}
-
-.mobile-only {
+body:not(.title-is-expanded) .title-br {
   display: none;
 }
 
 
+/* ── DESSIN INTRO ── */
+#intro-drawing {
+  position: fixed;
+  left: 4%;
+  /* Un peu à gauche, legèrement random */
+  top: 18%;
+  /* Milieu vertical approximatif, un peu random */
+  width: 380px;
+  /* <-- MODIFIEZ ICI POUR AGRANDIR/RÉDUIRE L'IMAGE */
+  height: auto;
+  z-index: 10;
+  pointer-events: none;
+  transform-origin: center center;
+  transition: opacity 0.15s ease;
+  /* Disparition rapide */
+}
+
+#intro-title {
+  display: inline-block;
+  text-align: center;
+}
+
+#intro-title a {
+  display: inline-block;
+  text-align: center;
+}
+
+body.is-at-top .lang-toggle {
+  position: fixed;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  padding: 10px 24px;
+  background: white;
+  border-width: 2.5px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--muted);
+  opacity: 0.6;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.lang-btn:hover {
+  opacity: 0.8;
+}
+
+.lang-btn.active {
+  color: var(--text);
+  opacity: 1;
+  text-decoration: underline;
+}
+
+col-text p.citation {
+  font-family: 'Literata', serif;
+  font-size: 1.5rem;
+  max-width: 900px;
+  line-height: 1;
+  text-align: left;
+  margin-top: -1em;
+  padding-left: 20rem;
+}
+
+/* Référence/Nom d'auteur à l'intérieur d'une citation */
+.citation-author {
+  display: block;
+  /* Force le passage à la ligne */
+  text-align: center;
+  /* Centre le nom par rapport au bloc de la citation */
+  font-family: var(--font);
+  /* Typo Archivo pour trancher un peu avec Literata, ou mettez 'Literata' si vous préférez */
+  font-size: 1.4rem;
+  /* Beaucoup plus petit */
+  font-weight: normal;
+  margin-top: 0.5rem;
+  /* Très peu d'espace avec le texte au-dessus */
+  color: #000;
+}
+
+p {
+  font-family: 'literata';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.15;
+  margin: 0 0 1.1em;
+  margin-top: 0;
+  margin-bottom: 0;
 
 
+}
 
-/* WEBSITE MEDIA QUERIES */
+h1 {
+  line-height: 1;
+  text-align: justify;
+  text-align-last: justify;
+}
 
-/* responsive typeface for various breaking points, sets the default 'rem' value */
-@media (max-width: 299px) { :root{--font-size: 18px;} html, body {font: var(--font-size) var(--font-text); } }
-@media (min-width: 299px) and (max-width: 340px) { :root{--font-size: 19px;} html, body {font: var(--font-size) var(--font-text); } }
-@media (min-width: 340px) and (max-width: 440px) { :root{--font-size: 20px;} html, body {font: var(--font-size) var(--font-text); } }
-@media (min-width: 441px) and (max-width: 779px) { :root{--font-size: 19px;} html, body {font: var(--font-size) var(--font-text); } }
-@media (min-width: 780px) and (max-width: 992px) { :root{--font-size: 20px;} html, body {font: var(--font-size) var(--font-text); } }
-@media (min-width: 993px) and (max-width: 1200px) { :root{--font-size: 21px;} html, body {font: var(--font-size) var(--font-text); } }
-@media (min-width: 1201px) and (max-width: 1320px) { :root{--font-size: 22px;} html, body {font: var(--font-size) var(--font-text); } }
-@media (min-width: 1321px) { :root{--font-size: 24px;} html, body {font: var(--font-size) var(--font-text); } }
+h2 {
+  font-family: var(--font);
+  font-weight: bold;
+  font-style: normal;
 
-/* styles for 'mobile', screen sizes up to 779px, should covers 'mobile' and 'tablet' */
-/* style this one first and then use the subsequent ones in a cascading way (from general to specific) */
+  /* --- RÉGLAGES DES TITRES H2 (ex: "Heterotopia has a point") --- */
+  font-size: 5rem;
+  /* Taille du texte (modifiable) */
+  text-align: center;
+  /* Centrage du texte */
+  text-decoration: underline;
+  /* Soulignement */
+  text-underline-offset: 0.1em;
+  /* Décale joliment le soulignement sous les lettres */
+  /* -------------------------------------------------------------- */
 
-@media (max-width: 779px) {
+  letter-spacing: -0.01em;
+  margin: 2.5em 0 0.6em;
+  line-height: 0.9;
+  /* Modifié (anciennement 0.3) pour éviter que de si grandes lettres ne se chevauchent si le titre s'étale sur deux lignes */
+}
 
-  /* your 'mobile' overriding css properties here */
+h2:first-child {
+  margin-top: 0;
+}
 
+figure {
+  margin: 0 0 2px;
+  /* quasi collées, juste 2px entre elles */
+}
 
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 
-  /* utility classes, mobile */
+figcaption {
+  font-size: 0.65rem;
+  color: var(--muted);
+  font-style: italic;
+  padding: 4px 0 16px;
+}
 
-  .desktop-only{
-    display:none;
+/* ── INTRO OVERLAY ── */
+#intro-overlay {
+  position: sticky;
+  top: 0;
+
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  pointer-events: none;
+
+  z-index: 101;
+}
+
+#intro-overlay a {
+  pointer-events: all
+}
+
+#intro-inner {
+  width: 100%;
+  text-align: left;
+  /* Par défaut placé à gauche pour simplifier la translation mathématique */
+  font-size: clamp(4rem, 12vw, 10rem);
+  user-select: none;
+}
+
+.intro-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-style: normal;
+  margin: 0 0 2.5rem;
+}
+
+#intro-title {
+  font-family: var(--font);
+  font-weight: bold;
+  font-style: normal;
+  font-size: inherit;
+  line-height: 1;
+  /* Aligne le haut des lettres avec la boîte pour éviter le vide invisible */
+  letter-spacing: -0.03em;
+  margin: 0;
+  padding: 0;
+  /* Aucune marge interne pour permettre le centrage exact */
+  display: inline-block;
+  /* Adapté à la taille du texte pour permettre un centrage au pixel près */
+}
+
+#intro-title a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  /* Pousse la ligne sous la boucle du 'g' pour éviter les coupures disgracieuses */
+  color: inherit;
+}
+
+.intro-hint {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-style: normal;
+  margin: 0;
+  animation: blink 1.8s ease-in-out infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
   }
 
-  .mobile-only{
-    display:block;
+  50% {
+    opacity: 0.2;
+  }
+}
+
+/* ── NAV ── */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+}
+
+nav {
+  position: sticky;
+  top: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-h);
+  padding: 0 var(--pad);
+  border-bottom: 2px solid #000000;
+}
+
+.nav-brand {
+  font-weight: bold;
+  font-style: normal;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 2rem;
+}
+
+nav ul li a {
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.45;
+  transition: opacity 0.15s;
+}
+
+nav ul li a:hover {
+  opacity: 1;
+}
+
+/* ── HERO ── */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 88vh;
+  padding: 6rem var(--pad);
+}
+
+.hero-title {
+  font-family: var(--font);
+  font-weight: bold;
+  font-style: normal;
+  font-size: clamp(5rem, 14vw, 13rem);
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  text-align: center;
+  margin: 0;
+}
+
+
+/* ── GRID for each chapter block ── */
+.chapter-block {
+  height: calc(100vh - 100px);
+  display: grid;
+  grid-template-columns: 0.8fr 2fr 1.2fr;
+  gap: 0;
+  /* Collées chacune d'elles */
+  width: 100%;
+  align-items: stretch;
+  min-height: calc(100vh - var(--nav-h));
+  /* Texte au même niveau que les images */
+  margin-bottom: 5rem;
+}
+
+.chapter-block:last-child {
+  margin-bottom: 0;
+}
+
+.chapter-block>div {
+  position: relative;
+  height: 100%;
+  overscroll-behavior-block: contain;
+  overflow-y: scroll;
+  /* Barre de scroll toujours présente pour éviter que le layout ne saute (pop) */
+}
+
+/* Empêche de scroller ou cliquer à l'intérieur tant que les colonnes ne sont pas accrochées en haut */
+.chapter-block:not(.is-at-top)>div {
+  pointer-events: none;
+}
+
+/* Réactive complètement l'interaction une fois en haut */
+.chapter-block.is-at-top>div {
+  pointer-events: auto;
+}
+
+.col-main {
+  background: rgb(255, 255, 255);
+  border: 2px solid #000000;
+  border-right: none;
+  border-top: none;
+  /* Empêche de doubler l'épaisseur (2px) avec la ligne du menu header */
+  order: 2;
+
+  padding: 2rem;
+  overflow-x: hidden;
+}
+
+.col-main>div {
+  position: relative;
+}
+
+/* Espacement global entre chaque chapitre/partie (ex: avant "Heterotopia...") */
+.col-main>div+div {
+  margin-top: 15rem;
+  /* Augmentez ce chiffre pour avoir encore plus de vide, ou réduisez-le pour rapprocher les chapitres */
+}
+
+
+
+.col-photos {
+  background: rgb(255, 255, 255);
+  border: 2px solid #000000;
+  border-right: 0;
+  border-top: none;
+  order: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0px;
+  padding-right: 20px;
+
+  overflow-x: clip;
+}
+
+/*.col-main,
+.col-photos {
+  transition: background-color 5000ms ease-in-out 0ms;
+}
+
+.col-main:hover,
+.col-photos:hover {
+  background-color: rgb(218, 218, 218);
+}*/
+
+.col-photos figure {
+  margin: 0 0 10px 0;
+  position: relative;
+}
+
+.photos-intro-container {
+  display: flex;
+  flex-direction: column;
+  /* Empile la flèche AU-DESSUS du texte */
+  align-items: center;
+  /* Centre horizontalement les deux éléments */
+  justify-content: flex-start;
+  /* margin-top : 0 pour coller le conteneur tout en haut (la flèche dépasse ensuite au-dessus grâce aux marges négatives) */
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding: 0 10px;
+}
+
+.photos-intro-arrow {
+  /* Plus de position absolute : la flèche est dans le flux normal, centrée automatiquement */
+  display: block;
+
+  /* C'est ICI que vous pouvez changer la taille de la flèche ! */
+  width: 300px;
+  height: auto;
+
+  /* ── DÉPASSEMENT AU-DESSUS DE LA BORDURE ──
+     Valeur négative = la flèche remonte et dépasse par-dessus la bordure du haut.
+     Augmentez (ex: -4rem) pour plus de dépassement, réduisez (-1rem) pour moins. */
+  margin-top: -1rem;
+
+  /* ── ESPACE ENTRE LA FLÈCHE ET LE TEXTE ──
+     Augmentez cette valeur pour plus d'espace, réduisez pour moins. */
+  margin-bottom: 0.5rem;
+}
+
+.photos-intro-text {
+  font-family: 'Literata', serif;
+  /* C'est ICI que vous pouvez changer la taille du texte ! */
+  font-size: 1.3rem;
+  text-decoration: underline;
+  text-underline-offset: 0.1rem;
+  line-height: 0.95;
+  text-align: center;
+  font-weight: bold;
+  max-width: 85%;
+  margin: 0;
+}
+
+.col-photos figure:last-child {
+  margin-bottom: 8rem;
+  /* Espace blanc ajouté en bas de la colonne des images */
+}
+
+.col-photos figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  transition: filter 0.3s ease;
+}
+
+.col-photos figure:hover img:not(.hover-img) {
+  /* Modifiez la valeur ci-dessous pour gérer l'assombrissement : 
+     1 = pas sombre du tout, 0 = totalement noir. 0.8 = légèrement sombre */
+  filter: brightness(0.8);
+}
+
+.col-photos figcaption {
+  position: absolute;
+  bottom: 8px;
+  /* Position de base en bas */
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 90%;
+  font-size: 0.8rem;
+  text-align: center;
+  color: #000;
+  font-family: 'Literata', serif;
+  font-style: normal;
+  padding: 0;
+  text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+  pointer-events: none;
+}
+
+.col-photos figure:hover figcaption {
+  bottom: 50%;
+  /* Remonte au milieu */
+  transform: translate(-50%, 50%);
+  /* Centre parfaitement */
+  font-size: 1.1rem;
+  color: #fff;
+  text-shadow: none;
+}
+
+/* Modificateur pour avoir un PNG en guise de description centrale */
+.col-photos figure.type-hover-png:hover figcaption {
+  /* Au lieu de monter et grossir, le texte d'origine veut juste disparaitre */
+  opacity: 0;
+  bottom: 8px;
+  transform: translate(-50%, 0);
+}
+
+.col-photos figure.type-hover-png .hover-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  /* Ajustez le % pour changer la taille de r PNG de texte */
+  height: auto;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.col-photos figure.type-hover-png:hover .hover-img {
+  opacity: 1;
+}
+
+/* autre colonne */
+.col-sub {
+  background: rgb(255, 255, 255);
+  border: 2px solid #000000;
+  border-right: none;
+  border-top: none;
+  order: 1;
+  padding: 2rem;
+  font-size: 0.8rem;
+  overflow-x: hidden;
+}
+
+/* Fallback Firefox pour cacher la scrollbar */
+@supports not selector(::-webkit-scrollbar) {
+  .col-sub {
+    scrollbar-width: none !important;
+  }
+}
+
+.col-sub>div {
+  position: relative;
+}
+
+.col-sub>div>p {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Annule l'invisibilité des notes inactives et force leur réapparition complète 
+   dès que la souris de l'utilisateur entre dans la colonne de gauche pour scroller */
+.col-sub:hover p[data-footnote] {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* ── BIBLIOGRAPHY ── */
+#bibliography {
+  margin-top: 15rem;
+  padding-right: 2rem;
+}
+
+
+
+#bibliography h2 {
+  font-family: var(--font);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+#bibliography>div {
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.5;
+  font-family: 'Literata', serif;
+}
+
+#bibliography p {
+  margin-bottom: 1rem;
+}
+
+#statement-originality {
+  margin-top: 25rem;
+  padding-bottom: 10rem;
+  /* Réduit pour laisser la place aux remerciements. Modifie cette valeur ou le margin-top ci-dessous pour gérer l'espace entre la signature et les remerciements */
+  text-align: center;
+  font-size: 1rem;
+}
+
+#acknowledgements-contact {
+  margin-top: 2rem;
+  /* Espace ajustable par rapport à la signature */
+  text-align: center;
+  font-family: var(--font);
+  /* Archivo Black */
+  margin-bottom: 3rem;
+  /* TOUT PETIT ESPACE EN BAS DE PAGE */
+  padding: 0 2rem;
+}
+
+#acknowledgements-contact .ack-text {
+  font-family: var(--font);
+  font-size: 0.8rem;
+  /* Typo assez petite */
+  line-height: 1.4;
+  margin: 0 auto;
+  max-width: 600px;
+  text-transform: none;
+}
+
+#acknowledgements-contact .ack-image {
+  max-width: 15rem;
+  /* Ajustez ce nombre pour gérer la taille de l'image (ex: 20rem, 10rem...) */
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto 0 auto;
+  /* Le '1rem' représente le très faible espace avec le texte juste au-dessus */
+}
+
+#acknowledgements-contact .contact-espace {
+  height: 9rem;
+  /* ESPACE PLUS GRAND juste avant les contacts */
+}
+
+#acknowledgements-contact .contact-nom {
+  font-family: var(--font);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+#acknowledgements-contact .contact-links {
+  font-family: var(--font);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+#acknowledgements-contact .contact-links a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  color: inherit;
+}
+
+#acknowledgements-contact .contact-links a:hover {
+  opacity: 0.5;
+}
+
+.signature-img {
+  max-width: 15rem;
+  /* Taille raisonnable modifiable */
+  height: auto;
+  margin-top: 2rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Texte */
+.col-text p {
+  margin: 0 0 0em;
+}
+
+.highlight {
+  text-decoration: underline;
+  text-decoration-color: #000;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+
+.col-text p.indented {
+  text-indent: 4em;
+}
+
+.col-text p.citation {
+  text-align: center;
+  font-family: var(--font);
+  font-style: normal;
+  font-size: 3.5rem;
+  font-weight: bold;
+  line-height: 1;
+  margin-top: 1.5rem;
+  margin-bottom: 3.3rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.text-block {
+  position: relative;
+  padding-left: 0px;
+}
+
+.arrow-marker {
+  position: absolute;
+  width: 70px;
+  top: -2px;
+  /* ajuste verticalement */
+  left: -40px;
+  /* sort légèrement dans la marge */
+}
+
+/* --- RÉGLAGES POUR LA 2ÈME FLÈCHE DU CHAPITRE HETEROTOPIA --- */
+.arrow-marker-2 {
+  position: absolute;
+  width: 75px;
+  top: -18px;
+  /* ajuste verticalement individuellement */
+  left: -40px;
+  /* sort légèrement dans la marge individuellement */
+}
+
+.arrow-break {
+  text-align: center;
+  margin: 1rem -1rem 0rem 0rem;
+  /* espace au-dessus et dessous */
+}
+
+.arrow-break img {
+  width: 80%;
+  /* ajuste selon ton design */
+  height: auto;
+}
+
+/* --- RÉGLAGES POUR LA FLÈCHE GÉANTE (HETEROTOPIA) --- */
+.arrow-break-giant {
+  text-align: center;
+  margin: 3rem 0rem 0rem 0rem;
+  /* Beaucoup d'air au-dessus et en-dessous */
+}
+
+.arrow-break-giant img {
+  width: 100%;
+  max-width: 35rem;
+  /* Ajustez ici pour la rendre encore plus "énorme" (ex: 35rem) */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* --- RÉGLAGES POUR LA QUESTION TEXTE IMPORTANTE --- */
+.important-question {
+  font-family: var(--font);
+  /* Typo Archivo */
+  font-size: 2.2rem;
+  font-weight: bold;
+  line-height: 0.9;
+  text-align: center;
+  /* Centrage horizontal du bloc (pour forcer le max-width à rester à l'équilibre au milieu) */
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 10;
+  /* Force le texte à s'afficher PAR DESSUS la flèche s'il passe dessus */
+
+  /* Aspiration de l'espace pour coller le texte à la pointe (à ajuster si l'image PNG a beaucoup de vide transparent) */
+  margin-top: -15rem;
+  /* Ajustez ce nombre librement ! */
+  margin-bottom: 2rem;
+}
+
+.citation-large {
+  font-size: 1.3rem;
+  text-align: center;
+  margin: 2em auto;
+  font-style: italic;
+  max-width: 80%;
+}
+
+/* --- CITATION DE CLÔTURE (Fin de Partie) --- */
+.citation-conclusion {
+  font-family: 'Literata', serif;
+  font-size: 2.3rem;
+  font-weight: 600;
+  /* 900 correspond à "Extra Bold" ou "Black" (le maximum possible) */
+  font-style: normal;
+  /* On retire l'italique */
+  line-height: 0.95;
+  /* On resserre l'espace entre les lignes */
+  text-align: center;
+  margin: 0 auto 2rem auto;
+  padding-top: 4rem;
+  /* Le PADDING force l'espace sans fusionner avec les paragraphes du dessus */
+  max-width: 100%;
+}
+
+.col-text p.important {
+  display: block;
+  max-width: 600px;
+  margin: 1rem auto;
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 1;
+  font-weight: bold;
+  padding: -1rem;
+}
+
+/* --- BLOC "QUESTIONS" (sous le titre de chapitre) --- */
+.chapter-questions {
+  font-weight: bold;
+  font-style: normal;
+  font-size: inherit;
+  font-size: 2.6rem;
+
+  text-align: center;
+
+  margin-top: 0.5rem;
+  /* Rapproché du titre */
+  margin-bottom: 6rem;
+}
+
+
+.chapter-questions p {
+  font-family: var(--font);
+  line-height: 0.95;
+  /* Interlignage très resserré, directement appliqué au texte */
+}
+
+
+
+
+/* ── FOOTER ── */
+footer {
+  padding: 2rem var(--pad);
+}
+
+footer p {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-style: normal;
+  margin: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── IMAGES MOBILES INLINE : cachées par défaut (desktop) ── */
+figure.mobile-inline-img {
+  display: none;
+}
+
+/* ── LIGHTBOX ── */
+#lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  align-items: center;
+  justify-content: center;
+  cursor: url('../../content/arrow_icon.png'), auto;
+}
+
+#lightbox-overlay.is-open {
+  display: flex;
+}
+
+#lightbox-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 88vw;
+  max-height: 88vh;
+  width: 100%;
+}
+
+#lightbox-img {
+  display: block;
+  max-width: 80vw;
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: none;
+  box-shadow: none;
+  background: none;
+  padding: 1.5rem;
+  cursor: url('../../content/arrow_icon.png'), auto;
+}
+
+
+
+#lightbox-caption {
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Literata', serif;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: url('../../content/arrow_icon.png'), auto;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  user-select: none;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-arrow img {
+  width: 200px;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+.lightbox-arrow:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+
+#lightbox-prev {
+  left: -70px;
+}
+
+#lightbox-next {
+  right: -70px;
+}
+
+#lightbox-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: url('../../content/arrow_icon.png'), auto;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#lightbox-close img {
+  width: 120px;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+#lightbox-close:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Indicate that the col-photos is clickable */
+.col-photos {
+  cursor: url('../../content/arrow_icon.png'), auto;
+}
+
+/* ── ESPACE MOBILE SPECIFIQUE (caché sur bureau) ── */
+.mobile-spacer,
+.mobile-spacer-ch2,
+.mobile-spacer-ch2-q {
+  display: none;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 780px) {
+  :root {
+    --fs: 16px;
+    --pad: 1.2rem;
+    --gap: 0;
   }
 
+  /* ── INTRO TITLE : remplit l'écran, naturel multilingnes ── */
+  #intro-inner {
+    padding: 0;
+    text-align: center;
+  }
+
+  #intro-title {
+    display: block;
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+    text-align-last: center;
+    /* Annule le 'justify' hérité du H1 global */
+    line-height: 0.95;
+    word-wrap: break-word;
+  }
+
+  /* ── GRILLE : une seule colonne ── */
+  .chapter-block {
+    display: block;
+    height: auto;
+    min-height: unset;
+    margin-bottom: 0;
+  }
+
+  /* Tous les divs enfants du chapter-block redeviennent normaux */
+  .chapter-block>div {
+    height: auto;
+    overflow-y: visible;
+    overflow-x: visible;
+    pointer-events: auto !important;
+  }
+
+  /* Masquer les colonnes secondaires */
+  .col-photos,
+  .col-sub {
+    display: none !important;
+  }
+
+  /* Colonne principale : pleine largeur, sans bord droit double */
+  .col-main {
+    order: 1;
+    border: none;
+    border-top: none;
+    padding: 1.4rem 1.2rem 2rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Espacement entre les sections du texte */
+  .col-main>div+div {
+    margin-top: 5rem;
+  }
+
+  /* H2 plus petits sur mobile */
+  h2 {
+    font-size: 2.8rem;
+    margin: 2rem 0 0.5rem;
+    line-height: 0.95;
+  }
+
+  /* Important question moins envahissante */
+  .important-question {
+    font-size: 1.6rem;
+    margin-top: -8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Giant arrow plus petite */
+  .arrow-break-giant img {
+    max-width: 22rem;
+  }
+
+  /* Citation en haut de page */
+  .col-text p.citation {
+    font-size: 2rem;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+  }
+
+  /* Chapter questions */
+  .chapter-questions {
+    font-size: 1.6rem;
+    margin-bottom: 3rem;
+  }
+
+  /* Citation conclusion */
+  .citation-conclusion {
+    font-size: 1.6rem;
+    padding-top: 2.5rem;
+  }
+
+  /* Important paragraphs */
+  .col-text p.important {
+    font-size: 1.2rem;
+    max-width: 100%;
+  }
+
+  /* Images mobiles intégrées dans le texte */
+  .mobile-inline-img {
+    display: block !important;
+    width: 100%;
+    height: auto;
+    margin: 1.5rem 0;
+    position: relative;
+    /* Indispensable pour l'overlay de la description */
+  }
+
+  /* Espacement contrôlable (masqué sur desktop) */
+  .mobile-spacer {
+    display: block;
+    height: 20rem;
+    width: 100%;
+  }
+
+  /* Espace entre fin de Hétérotopia et SO GOOD SO FAR */
+  .mobile-spacer-ch2 {
+    display: block;
+    height: 12rem;
+    width: 100%;
+  }
+
+  .mobile-spacer-ccl {
+    display: block;
+    height: 12rem;
+    width: 100%;
+  }
+
+  /* Espace entre SKATE=profits? et Are we heading… — modifiable ici ! */
+  .mobile-spacer-ch2-q {
+    display: block;
+    height: 10rem;
+    /* Modifie ce chiffre librement */
+    width: 100%;
+  }
+
+  /* Espace additionnel spécifique sous la question de la partie HETEROTOPIA UNIQUEMENT MOBILE */
+  .espace-heterotopia {
+    margin-bottom: 12rem;
+  }
+
+  .mobile-inline-img figcaption {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 90%;
+    font-size: 0.8rem;
+    text-align: center;
+    color: #000;
+    font-family: 'Literata', serif;
+    font-style: normal;
+    padding: 0;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 1);
+    pointer-events: none;
+  }
+
+  /* Nav */
+  nav ul {
+    gap: 1rem;
+  }
+
+  /* Barre de progression reste visible */
+  .progress-container {
+    display: block;
+  }
+
+  /* Footnotes en popup sur mobile */
+  sup[data-footnote] {
+    cursor: pointer;
+    color: #ff00d0;
+    /* Pour qu'elles soient un peu visibles comme clicables */
+  }
+
+
+  /* Lightbox arrows plus petites */
+  .lightbox-arrow img {
+    width: 80px;
+  }
+
+  /* Cacher la croix de la lightbox sur mobile car le clic sur le fond suffit */
+  #lightbox-close {
+    display: none !important;
+  }
+
+  /* Texte de légende : ne pas déborder en dehors de l'écran sur mobile */
+  #lightbox-caption {
+    white-space: normal;
+    width: 90vw;
+    text-align: center;
+    font-size: 1.3rem;
+    /* Modifie ce chiffre pour agrandir/réduire — le texte reviendra à la ligne automatiquement */
+    bottom: -2.5rem;
+  }
+
+  #lightbox-prev {
+    left: -20px;
+  }
+
+  #lightbox-next {
+    right: -20px;
+  }
 }
-
-
-
-/* use this query to apply style changes to smaller smartphones sizes (like an iPhone 5S or SE 2016), max size of 339px */
-
-@media (max-width: 339px) {
-
-  /* your overriding css properties here */
-
-}
-
-
-
-/* use this query to apply style changes for 'mobile' screen sizes that are flipped in 'landscape' mode */
-
-@media (max-width: 779px) and (orientation: landscape) {
-
-   /* your overriding css properties here */
-
-}
-
-
-
-/* use this query to apply style for 'small' desktop screens */
 
 @media (min-width: 780px) and (max-width: 992px) {
-
-  /* your overriding css properties here */
+  :root {
+    --fs: 16px;
+  }
 
 }
 
+@media (min-width: 993px) and (max-width: 1320px) {
+  :root {
+    --fs: 17px;
+  }
+}
 
+@media (min-width: 1321px) {
+  :root {
+    --fs: 18px;
+  }
+}
+
+/* ── BOUTON INFO / ABSTRACT ── */
+#info-btn {
+  background: white;
+  border: 1.5px solid #000;
+  border-radius: 50px;
+  padding: 4px 12px;
+  cursor: url('../../content/arrow_icon.png'), pointer;
+  color: #000;
+  margin-left: 0;
+  position: relative;
+  /* Required for the absolute positioning of the hover text */
+  z-index: 999;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#info-btn .abstract-btn-img {
+  width: 25px;
+  /* Taille de la flèche quand elle est dans le menu en haut */
+  height: auto;
+  transition: opacity 0.2s ease;
+  display: block;
+}
+
+#info-btn .abstract-btn-hover-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  font-family: var(--font);
+  font-size: 1.5rem;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+#info-btn:hover .abstract-btn-img {
+  opacity: 0;
+  /* L'image cache visuellement mais conserve ses dimensions */
+}
+
+#info-btn:hover .abstract-btn-hover-text {
+  opacity: 1;
+  /* Affiche les points d'interrogation */
+}
+
+body.is-at-top #info-btn {
+  position: fixed;
+  bottom: 8rem;
+  right: 5%;
+  padding: 15px;
+  border-width: 2.5px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transform: none;
+  /* Just fixed to the right */
+  border-radius: 50%;
+  /* Cercle parfait pour la grande icone */
+}
+
+body.is-at-top #info-btn .abstract-btn-img {
+  width: 160px;
+  /* <-- MODIFIEZ CETTE VALEUR ICI POUR AGRANDIR LA FLÈCHE AU DÉBUT (ex: 120px) */
+}
+
+body.is-at-top #info-btn .abstract-btn-hover-text {
+  font-size: 6rem;
+  margin-top: 5px;
+  /* Pour aligner parfaitement les "?" au milieu du cercle */
+}
+
+#info-btn:hover {
+  background: #000;
+  color: #fff;
+}
+
+/* ── TEXT POPUP ── */
+#text-popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  align-items: center;
+  justify-content: center;
+  cursor: url('../../content/arrow_icon.png'), auto;
+}
+
+#text-popup-overlay.is-open {
+  display: flex;
+}
+
+#text-popup-inner {
+  position: relative;
+  background: var(--bg);
+  /* L'ESPACE INTÉRIEUR DU RECTANGLE SE GÈRE ICI AVEC "padding" */
+  /* Ordre: [Espace-Haut] [Espace-Côtés] [Espace-Bas] */
+  padding: 0.8rem 2rem 3rem;
+  /* (J'ai réduit à 1.5rem pour coller le titre au bord haut) */
+  max-width: 700px;
+  /* <-- MODIFIEZ CECI POUR LA LARGEUR (ex: 700px, 800px...) */
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 2px solid #000;
+  cursor: auto;
+}
+
+#text-popup-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  font-family: var(--font);
+  font-size: 1.2rem;
+  cursor: url('../../content/arrow_icon.png'), pointer;
+  color: #000;
+  padding: 0;
+}
+
+#text-popup-close:hover {
+  opacity: 0.5;
+}
+
+#text-popup-close img {
+  width: 20px;
+  height: 20px;
+}
+
+.text-popup-content {
+  font-family: 'literata', serif;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: left;
+  /* Aligné à gauche au lieu de justifié */
+}
+
+.text-popup-content .abstract-title {
+  font-family: var(--font);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  margin-top: 0;
+}
+
+.text-popup-content p {
+  margin-bottom: 0;
+  /* Suppression des espaces entre les paragraphes */
+}
+
+.text-popup-content p.indented {
+  text-indent: 4em;
+  /* Tabulation (effet indent/tab) */
+}
+
+.abstract-scroll-arrows {
+  text-align: center;
+  margin-top: 2.5rem;
+  margin-bottom: -2.8rem;
+  line-height: 0;
+}
+
+.abstract-scroll-arrows img {
+  width: 600px;
+  /* <-- MODIFIEZ CECI POUR CHANGER LA TAILLE DES FLÈCHES EN BAS (ex: 200px, 250px...) */
+  height: auto;
+}
+
+/* ── FOOTNOTE POPUP (Global mais activé uniquement sur mobile en JS) ── */
+#footnote-popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: transparent;
+  pointer-events: none;
+}
+
+#footnote-popup-overlay.is-open {
+  display: block;
+}
+
+#footnote-popup-inner {
+  pointer-events: auto;
+  position: absolute;
+  background: var(--bg);
+  /* Solide blanc cassé/beige du site */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 0.4rem 0.6rem;
+  max-width: 85vw;
+  width: max-content;
+  border: 1px solid #000;
+  /* Contour noir strict */
+  border-radius: 0;
+  /* Sans bords arrondis */
+  box-shadow: none;
+  /* Pas d'ombre */
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Espace entre la flèche et le texte */
+}
+
+#footnote-popup-arrow {
+  width: 75px;
+  /* Très grande flèche */
+  height: auto;
+  margin-top: 0;
+  flex-shrink: 0;
+  /* Empêche la flèche de s'écraser si le texte est long */
+}
+
+#footnote-popup-content {
+  font-family: 'Literata', serif;
+  font-size: 0.9rem;
+  line-height: 1;
+  text-align: left;
+  color: #000;
+}
