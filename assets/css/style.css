@@ -1365,7 +1365,7 @@ figure.mobile-inline-img {
   }
 
   body.is-at-top #info-btn .abstract-btn-img {
-    width: 75px;
+    width: 70px;
     /* <-- Modifiez cette taille (ex: 65px, 75px, 85px) pour agrandir/réduire la flèche sur mobile au début */
   }
 
