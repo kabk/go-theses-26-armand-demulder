@@ -367,8 +367,7 @@ window.TRANSLATIONS = {
       Thanks to Maya Sagara Cur\u00e9 for the proofreading.<br>
       Thanks to Sim for your encouragement and support.<br>
       Thanks to the fines I have received! Thanks to the city and to skateboarding. Thanks to the spirit of
-      skateboarding.<br>
-      Translation: Deepl AI + me.`,
+      skateboarding.<br>`,
   },
 
   /* ════════════════════════════════════════════════════════════════════════ */
@@ -382,14 +381,13 @@ window.TRANSLATIONS = {
     'main-site-title': `Dialogue pour<span class="title-space"> </span><br class="title-br">l’'hétérotopie'`,
     'abstract-btn-text': `DE QUOI ÇA PARLE ?`,
     'abstract-title': `À propos de ?`,
-    'abstract-text': `La relation entre les skateurs et l’espace urbain est particulière : ‘sauvage’, basée sur le jeu et l’improvisation. Etant moi-même skateur, je suis fasciné par les courbes, lignes et l’esprit du skateboard. On a tous joué à chercher le bon spot, à emmerder, à se prendre des amendes et à vouloir un meilleur partage et une compréhension de l’espace urbain. 
-Le skate est artistique ; il est inspirant et nourrit quotidiennement mon travail artistique. (Je veux continuer à enrichir ce jeu/cet communauté par la forme et non uniquement avec le corps.)`,
-    'abstract-text-2': `Depuis les années 1970, le skate et la ville ont évolué. Des Z-Boys de Californie aux skateparks modulaires (souvent mal conçus et vécus), pratique <br> « street » et skateparks n’ont cessé de se développer et la ville s’est imposée comme un terrain de jeu, vécue, proche des idées Situationnistes (de dériver sans but en ville). Malgré cet esprit positif, elle génère des tensions : nuisances, conflits d’usages, restrictions…`,
-    'abstract-text-3': `Toutefois, depuis 20 ans le dialogue s’ouvre : médiation, échanges 
+    'abstract-text': `La relation entre les skateurs et l’espace urbain est particulière : ‘sauvage’, basée sur le jeu et l’improvisation. Etant moi-même skateur, je suis fasciné par les courbes, lignes et l’esprit du skateboard. On a tous joué à chercher le bon spot, à « emmerder », à se prendre des amendes et à vouloir un meilleur partage et une compréhension de l’espace urbain. 
+Le skate est artistique ; il est inspirant et nourrit quotidiennement mon travail artistique. (Je veux continuer à enrichir ce jeu/cette communauté par la forme et non uniquement avec le corps.)`,
+    'abstract-text-2': `Depuis les années 1970, le skate et la ville ont évolué. Des Z-Boys de Californie aux skateparks modulaires (souvent mal conçus et vécus), pratique « street » et skateparks n’ont cessé de se développer et la ville s’est imposée comme un terrain de jeu, vécue, proche des idées Situationnistes (de dériver sans but en ville). Malgré cet esprit positif, cette pratique génère des tensions : nuisances, conflits d’usages, restrictions`,
+    'abstract-text-3': `Toutefois, depuis 20 ans, le dialogue s’ouvre : médiation, échanges 
 et écoute, des deux côtés, laissent entrevoir de nouvelles pistes… 
-Dès lors, le skateboard peut-il être compris comme une forme de résistance à la standardisation des espaces publics ? Comment la cohabitation (ville-skate) s’articule-t-elle pour repenser l’espace urbain ?`,
-    'abstract-text-4': `Ces échanges permettent une meilleure compréhension de la pratique et des enjeux (des deux côtés) et ouvrent la voie à une meilleure intégration ou à un meilleur encadrement. Ils apportent souvent de nombreux bénéfices comme des aménagements urbains pour toutes pratiques… Ayant discuté avec plusieurs médiateurs, ce processus est long, difficile mais a une vraie valeur ajoutée et il faut poursuivre cet élan courageux !`,
-    'abstract-text-5': `Par ces réflexions/discussions, j’explore (selon ces valeurs) comment de — grandes — formes hybrides (skatables) peuvent émerger (que je vais construire) : supports de jeu, d’appropriation et de dialogue… Rester ‘sauvage’ et joueur me semble essentiel dans ma pratique.`,
+Dès lors, le skateboard peut-il être compris comme une forme de résistance à la standardisation des espaces publics ? Comment la cohabitation (ville-skate) s’articule-t-elle pour repenser l’espace urbain ? `,
+    'abstract-text-4': `Ces échanges permettent une meilleure compréhension de la pratique et des enjeux (des deux côtés) et ouvrent la voie à une meilleure intégration ou à un meilleur encadrement. Ils apportent souvent de nombreux bénéfices comme des aménagements urbains pour toutes pratiques… Ayant discuté avec plusieurs médiateurs, ce processus est long, difficile mais a une vraie valeur ajoutée et il faut poursuivre cet élan courageux ! `,
     'photos-intro': 'L’évolution du skateboard <br> en ville :',
 
     /* Chapitre 1 */
