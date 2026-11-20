@@ -488,8 +488,7 @@ Merci aux tuteurs Simnikiwe Buhlungu, Bart Baets.<br>Merci aux tuteurs de code T
 Merci à Léo Valls, Stéphane Gallois, Guillaume Clencke et Mike Van Staten qui ont généreusement pris du temps pour me partager leurs savoirs lors de nos échanges.Merci aux références citées.<br>
 Merci à mes amis/camarades de l’Académie Royale des Arts (KABK) de La Haye aux Pays-Bas.Merci à cette superbe école.<br>
 Merci à Maya Sagara Curé pour la relecture.<br> Merci à Sim pour ton encouragement et ton support.<br>
-Merci aux prunes reçues ! Merci aux villes et au skateboard.<br> Merci à l’esprit du skate.<br>
-Traduction : Deepl IA + moi.`,
+Merci aux prunes reçues ! Merci aux villes et au skateboard.<br> Merci à l’esprit du skate.`,
 
     /* Footnotes */
     'fn-1': `1. BROCHOT, Aline, DE LA SOUDIÈRE, Martin. « Pourquoi le lieu. » 2010, p. 6.`,
