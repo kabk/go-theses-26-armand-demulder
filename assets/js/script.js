@@ -487,6 +487,12 @@ window.dispatchEvent(new Event('scroll'));
       return;
     }
 
+    // Ne pas fermer si l'utilisateur est en train de sélectionner du texte sur ordinateur
+    const selection = window.getSelection();
+    if (selection && selection.toString().trim().length > 0) {
+      return;
+    }
+
     if (window.innerWidth <= 780) {
       // Sur mobile : fermer au tap n'importe où (dedans ou dehors),
       // sauf si l'utilisateur était en train de faire défiler le texte avec son doigt
@@ -495,10 +501,8 @@ window.dispatchEvent(new Event('scroll'));
       }
       isTouchMoving = false;
     } else {
-      // Sur desktop : fermer uniquement si on clique en dehors du popup
-      if (!popupInner.contains(e.target)) {
-        closePopup();
-      }
+      // Sur ordinateur : fermer au clic n'importe où (dedans comme dehors)
+      closePopup();
     }
   });
 
