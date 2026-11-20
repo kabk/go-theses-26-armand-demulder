@@ -433,7 +433,14 @@ window.dispatchEvent(new Event('scroll'));
 
   if (!btnOpen || !popupOverlay) return;
 
+  let lastOpenedAt = 0;
+  let isTouchMoving = false;
+  let touchStartX = 0;
+  let touchStartY = 0;
+
   function openPopup() {
+    lastOpenedAt = Date.now();
+    isTouchMoving = false;
     popupOverlay.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   }
@@ -443,12 +450,55 @@ window.dispatchEvent(new Event('scroll'));
     document.body.style.overflow = '';
   }
 
-  btnOpen.addEventListener('click', openPopup);
-  if (btnClose) btnClose.addEventListener('click', closePopup);
+  btnOpen.addEventListener('click', function (e) {
+    e.stopPropagation();
+    openPopup();
+  });
+
+  if (btnClose) {
+    btnClose.addEventListener('click', function (e) {
+      e.stopPropagation();
+      closePopup();
+    });
+  }
+
+  // Détecter si le geste sur mobile est un défilement (scroll) plutôt qu'un tap
+  popupOverlay.addEventListener('touchstart', function (e) {
+    if (e.touches.length === 1) {
+      isTouchMoving = false;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  popupOverlay.addEventListener('touchmove', function (e) {
+    if (e.touches.length === 1) {
+      const dx = Math.abs(e.touches[0].clientX - touchStartX);
+      const dy = Math.abs(e.touches[0].clientY - touchStartY);
+      if (dx > 10 || dy > 10) {
+        isTouchMoving = true;
+      }
+    }
+  }, { passive: true });
 
   popupOverlay.addEventListener('click', function (e) {
-    if (!popupInner.contains(e.target)) {
-      closePopup();
+    // Éviter de fermer immédiatement lors du tap d'ouverture
+    if (Date.now() - lastOpenedAt < 250) {
+      return;
+    }
+
+    if (window.innerWidth <= 780) {
+      // Sur mobile : fermer au tap n'importe où (dedans ou dehors),
+      // sauf si l'utilisateur était en train de faire défiler le texte avec son doigt
+      if (!isTouchMoving) {
+        closePopup();
+      }
+      isTouchMoving = false;
+    } else {
+      // Sur desktop : fermer uniquement si on clique en dehors du popup
+      if (!popupInner.contains(e.target)) {
+        closePopup();
+      }
     }
   });
 
