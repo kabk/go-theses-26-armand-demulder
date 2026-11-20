@@ -1355,6 +1355,23 @@ figure.mobile-inline-img {
   body:not(.is-at-top) #info-btn .abstract-btn-img {
     width: 18px;
   }
+
+  /* ── MOBILE : bouton abstract au début (is-at-top) ── */
+  body.is-at-top #info-btn {
+    bottom: 5rem;
+    right: 5%;
+    padding: 10px;
+    border-width: 2px;
+  }
+
+  body.is-at-top #info-btn .abstract-btn-img {
+    width: 75px;
+    /* <-- Modifiez cette taille (ex: 65px, 75px, 85px) pour agrandir/réduire la flèche sur mobile au début */
+  }
+
+  body.is-at-top #info-btn .abstract-btn-hover-text {
+    font-size: 3rem;
+  }
 }
 
 @media (min-width: 780px) and (max-width: 992px) {
@@ -1491,25 +1508,7 @@ body.is-at-top #info-btn .abstract-btn-hover-text {
 }
 
 #text-popup-close {
-  position: absolute;
-  top: 1rem;
-  right: 1.5rem;
-  background: none;
-  border: none;
-  font-family: var(--font);
-  font-size: 1.2rem;
-  cursor: url('../../content/arrow_icon.png'), pointer;
-  color: #000;
-  padding: 0;
-}
-
-#text-popup-close:hover {
-  opacity: 0.5;
-}
-
-#text-popup-close img {
-  width: 20px;
-  height: 20px;
+  display: none !important;
 }
 
 .text-popup-content {

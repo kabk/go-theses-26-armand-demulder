@@ -622,7 +622,7 @@ function initLanguageToggle() {
     // Apply translations
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
-      
+
       // Save English text the first time
       if (!el.dataset.enOriginal) {
         el.dataset.enOriginal = el.innerHTML;
